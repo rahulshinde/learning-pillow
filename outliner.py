@@ -3,14 +3,17 @@ from PIL import Image
 import sys
 import glob
 
-files = glob.glob("img/*.jpg")
+files = glob.glob("img/1.jpg")
 count = 0
 
 for i in files:
     im = Image.open(i)
     pixdata = im.load()
 
-    newIm = 
+    width, height = im.size()
+
+    newIm = Image.new("RGB", (width, height))
+    newData = newIm.load()
 
     count += 1
     strCount = str(count)
@@ -24,10 +27,10 @@ for i in files:
 
     for y in xrange(1, im.size[1]-1):
         for x in xrange(1, im.size[0]-1):
-            if pixdata[x, y] == (0,0,0) and (pixdata[x + 1, y] == (255, 255, 255) or pixdata[x + 1, y + 1] == (255, 255, 255) or pixdata[x, y + 1] == (255, 255, 255)):
-                pixdata[x, y] = (0, 0, 0)
+            if pixdata[x, y] == (0,0,0) and (pixdata[x + 1, y] == (255, 255, 255) or pixdata[x + 1, y + 1] == (255, 255, 255) or pixdata[x, y + 1] == (255, 255, 255) or pixdata[x - 1, y] == (255, 255, 255) or pixdata[x - 1, y - 1] == (255, 255, 255) or pixdata[x, y + 1] == (255, 255, 255) or pixdata[x - 1, y + 1] == (255, 255, 255) or pixdata[x + 1, y - 1] == (255, 255, 255)):
+                newData[x, y] = (0, 0, 0)
             else:
-                pixdata[x, y] = (255, 255, 255)
+                newData[x, y] = (255, 255, 255)
 
-    im.convert('RGB')
-    im.save('out/translation3.2/' + strCount + '.3.jpg', "JPEG")
+    newIm.convert('RGB')
+    newIm.save('out/outliner/' + strCount + '.jpg', "JPEG")
