@@ -3,14 +3,15 @@ from PIL import Image
 import sys
 import glob
 
-files = glob.glob("img/1.jpg")
+files = glob.glob("img/*.jpg")
 count = 0
 
 for i in files:
     im = Image.open(i)
     pixdata = im.load()
 
-    width, height = im.size()
+    width = im.size[0]
+    height = im.size[1]
 
     newIm = Image.new("RGB", (width, height))
     newData = newIm.load()
@@ -20,7 +21,7 @@ for i in files:
 
     for y in xrange(im.size[1]):
         for x in xrange(im.size[0]):
-            if 100 < pixdata[x, y][0] or 100 < pixdata[x, y][1] or 100 < pixdata[x, y][2]:
+            if 180 < pixdata[x, y][0] or 180 < pixdata[x, y][1] or 180 < pixdata[x, y][2]:
                 pixdata[x, y] = (0, 0, 0)
             else:
                 pixdata[x, y] = (255, 255, 255)
