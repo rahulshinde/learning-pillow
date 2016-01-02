@@ -48,16 +48,6 @@ def color_val(files):
 
     while True:
         try:
-            bl = int(raw_input("Enter an B value to check for (between 0-255): "))
-            if 0 <= bl <= 255:
-                break
-            else:
-                print "Sorry that's not in range. Let's try again"
-        except ValueError:
-            print "Oops!  That was not a valid number. Let's try again..."
-
-    while True:
-        try:
             gl = int(raw_input("Enter an G value to check for (between 0-255): "))
             if 0 <= gl <= 255:
                 break
@@ -66,9 +56,94 @@ def color_val(files):
         except ValueError:
             print "Oops!  That was not a valid number. Let's try again..."
 
+    while True:
+        try:
+            bl = int(raw_input("Enter an B value to check for (between 0-255): "))
+            if 0 <= bl <= 255:
+                break
+            else:
+                print "Sorry that's not in range. Let's try again"
+        except ValueError:
+            print "Oops!  That was not a valid number. Let's try again..."
+
+    print "Cool, now that the images have been processed, we have to choose a fill and outline color"
+    print "Let's start with the outline, "
+
+    while True:
+        try:
+            outline_r = int(raw_input("Enter an R value for the outline (between 0-255): "))
+            if 0 <= outline_r <= 255:
+                break
+            else:
+                print "Sorry that's not in range. Let's try again"
+        except ValueError:
+            print "Oops!  That was not a valid number. Let's try again..."
+
+    while True:
+        try:
+            outline_g = int(raw_input("Enter an G value for the outline (between 0-255): "))
+            if 0 <= outline_g <= 255:
+                break
+            else:
+                print "Sorry that's not in range. Let's try again"
+        except ValueError:
+            print "Oops!  That was not a valid number. Let's try again..."
+
+    while True:
+        try:
+            outline_b = int(raw_input("Enter an B value for the outline (between 0-255): "))
+            if 0 <= outline_b <= 255:
+                break
+            else:
+                print "Sorry that's not in range. Let's try again"
+        except ValueError:
+            print "Oops!  That was not a valid number. Let's try again..."
+
+    outline = (outline_r, outline_g, outline_b)
+    print "Your outline color is : RGB( " + str(outline[0]) + ", " + str(outline[1]) + ", " + str(outline[2]) +" )"
+    print ""
+    print "Now lets do the fill,"
+
+    while True:
+        try:
+            fill_r = int(raw_input("Enter an R value for the fill (between 0-255): "))
+            if 0 <= fill_r <= 255:
+                break
+            else:
+                print "Sorry that's not in range. Let's try again"
+        except ValueError:
+            print "Oops!  That was not a valid number. Let's try again..."
+
+    while True:
+        try:
+            fill_g = int(raw_input("Enter an G value for the fill (between 0-255): "))
+            if 0 <= fill_g <= 255:
+                break
+            else:
+                print "Sorry that's not in range. Let's try again"
+        except ValueError:
+            print "Oops!  That was not a valid number. Let's try again..."
+
+    while True:
+        try:
+            fill_b = int(raw_input("Enter an B value for the fill (between 0-255): "))
+            if 0 <= fill_b <= 255:
+                break
+            else:
+                print "Sorry that's not in range. Let's try again"
+        except ValueError:
+            print "Oops!  That was not a valid number. Let's try again..."
+
+    fill = (fill_r, fill_g, fill_b)
+    print "Your fill color is : RGB( " + str(fill[0]) + ", " + str(fill[1]) + ", " + str(fill[2]) +" )"
+
+    return (True, (files, rl, gl, bl, outline, fill))
+
 
 def img_processing(args): #files, rl, bl, gl, outline, fill):
-    files, rl, bl, gl, outline, fill = args
+    files, rl, gl, bl, outline, fill = args
+    count = 0;
+
     for i in files:
         im = Image.open(i)
         pixdata = im.load()
@@ -84,7 +159,7 @@ def img_processing(args): #files, rl, bl, gl, outline, fill):
 
         for y in xrange(im.size[1]):
             for x in xrange(im.size[0]):
-                if rl < pixdata[x, y][0] or bl < pixdata[x, y][1] or gl < pixdata[x, y][2]:
+                if rl < pixdata[x, y][0] or gl < pixdata[x, y][1] or bl < pixdata[x, y][2]:
                     pixdata[x, y] = (0, 0, 0)
                 else:
                     pixdata[x, y] = (255, 255, 255)
@@ -100,5 +175,5 @@ def img_processing(args): #files, rl, bl, gl, outline, fill):
         newIm.save('out/outliner-input/' + strCount + '.jpg', "JPEG")
 
 success, args = startup()
-# if success:
-    # img_processing(args)
+if success:
+    img_processing(args)
